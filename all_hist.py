@@ -44,6 +44,7 @@ class Eventdata:
     self.y_binwidth = 2.0*self.ymax/nbins
 
     self.n_p = 0
+    self.n_n =0
     self.n_p_bar = 0
     self.n_lambda = 0
     self.n_lambda_bar = 0
@@ -55,6 +56,7 @@ class Eventdata:
     
     self.p_hist_xF = numpy.zeros(nbins)
     self.p_bar_hist_xF = numpy.zeros(nbins)
+    self.n_hist_xF = numpy.zeros(nbins)
     self.lambda_hist_xF = numpy.zeros(nbins)
     self.lambda_bar_hist_xF = numpy.zeros(nbins)
     self.pi_plus_hist_xF = numpy.zeros(nbins)
@@ -64,6 +66,7 @@ class Eventdata:
 
     self.p_hist_y = numpy.zeros(nbins)
     self.p_bar_hist_y = numpy.zeros(nbins)
+    self.n_hist_y = numpy.zeros(nbins)
     self.lambda_hist_y = numpy.zeros(nbins)
     self.lambda_bar_hist_y = numpy.zeros(nbins)
     self.pi_plus_hist_y = numpy.zeros(nbins)
@@ -75,6 +78,7 @@ class Eventdata:
     #it is the summed up pt in every xF bin
     self.p_hist_pT = numpy.zeros(nbins)
     self.p_bar_hist_pT = numpy.zeros(nbins)
+    self.n_hist_pT = numpy.zeros(nbins)
     self.lambda_hist_pT = numpy.zeros(nbins)
     self.lambda_bar_hist_pT = numpy.zeros(nbins)
     self.pi_plus_hist_pT = numpy.zeros(nbins)
@@ -86,6 +90,7 @@ class Eventdata:
     #it is the summed up pt^2 in every xF bin
     self.p_pT2 = numpy.zeros(nbins)
     self.p_bar_pT2 = numpy.zeros(nbins)
+    self.n_pT2 = numpy.zeros(nbins)
     self.lambda_pT2 = numpy.zeros(nbins)
     self.lambda_bar_pT2 = numpy.zeros(nbins)
     self.pi_plus_pT2 = numpy.zeros(nbins)
@@ -129,6 +134,10 @@ class Eventdata:
       self.update_hists(self.p_bar_hist_xF, self.p_bar_hist_y,\
                         self.p_bar_hist_pT,self.p_bar_pT2, particle)
       self.n_p_bar+=1
+    elif particle.pdg == '2112': #neutron
+      self.update_hists(self.n_hist_xF, self.n_hist_y,\
+                        self.n_hist_pT, self.n_pT2, particle)
+      self.n_n+=1
     elif particle.pdg == '3212': #Lambda
       self.update_hists(self.lambda_hist_xF,self.lambda_hist_y,\
                         self.lambda_hist_pT,self.lambda_pT2,particle)
@@ -172,6 +181,7 @@ class Smash_run:
     self.nevents=0
     self.p_hist_xF = numpy.zeros(nbins)
     self.p_bar_hist_xF = numpy.zeros(nbins)
+    self.n_hist_xF = numpy.zeros(nbins)
     self.lambda_hist_xF = numpy.zeros(nbins)
     self.lambda_bar_hist_xF = numpy.zeros(nbins)
     self.pi_plus_hist_xF = numpy.zeros(nbins)
@@ -181,6 +191,7 @@ class Smash_run:
 
     self.p_hist_y = numpy.zeros(nbins)
     self.p_bar_hist_y = numpy.zeros(nbins)
+    self.n_hist_y = numpy.zeros(nbins)
     self.lambda_hist_y = numpy.zeros(nbins)
     self.lambda_bar_hist_y = numpy.zeros(nbins)
     self.pi_plus_hist_y = numpy.zeros(nbins)
@@ -192,6 +203,7 @@ class Smash_run:
     #it is the summed up pt in every xF bin
     self.p_hist_pT = numpy.zeros(nbins)
     self.p_bar_hist_pT = numpy.zeros(nbins)
+    self.n_hist_pT = numpy.zeros(nbins)
     self.lambda_hist_pT = numpy.zeros(nbins)
     self.lambda_bar_hist_pT = numpy.zeros(nbins)
     self.pi_plus_hist_pT = numpy.zeros(nbins)
@@ -203,6 +215,7 @@ class Smash_run:
     #it is the summed up pt^2 in every xF bin
     self.p_pT2 = numpy.zeros(nbins)
     self.p_bar_pT2 = numpy.zeros(nbins)
+    self.n_pT2 = numpy.zeros(nbins)
     self.lambda_pT2 = numpy.zeros(nbins)
     self.lambda_bar_pT2 = numpy.zeros(nbins)
     self.pi_plus_pT2 = numpy.zeros(nbins)
@@ -218,6 +231,7 @@ class Smash_run:
   def add_event(self,event):
     self.p_hist_xF += event.p_hist_xF
     self.p_bar_hist_xF += event.p_bar_hist_xF
+    self.n_hist_xF += event.n_hist_xF
     self.lambda_hist_xF += event.lambda_hist_xF
     self.lambda_bar_hist_xF += event.lambda_bar_hist_xF
     self.pi_plus_hist_xF += event.pi_plus_hist_xF
@@ -227,6 +241,7 @@ class Smash_run:
 
     self.p_hist_y += event.p_hist_y
     self.p_bar_hist_y += event.p_bar_hist_y
+    self.n_hist_y += event.n_hist_y
     self.lambda_hist_y += event.lambda_hist_y
     self.lambda_bar_hist_y += event.lambda_bar_hist_y
     self.pi_plus_hist_y += event.pi_plus_hist_y
@@ -238,6 +253,7 @@ class Smash_run:
     #it is the summed up pt in every xF bin
     self.p_hist_pT += event.p_hist_pT
     self.p_bar_hist_pT += event.p_bar_hist_pT
+    self.n_hist_pT += event.n_hist_pT
     self.lambda_hist_pT += event.lambda_hist_pT
     self.lambda_bar_hist_pT += event.lambda_bar_hist_pT
     self.pi_plus_hist_pT += event.pi_plus_hist_pT
@@ -247,6 +263,7 @@ class Smash_run:
     
     self.p_pT2 += event.p_pT2
     self.p_bar_pT2 += event.p_bar_pT2
+    self.n_pT2 += event.n_pT2
     self.lambda_pT2 += event.lambda_pT2
     self.lambda_bar_pT2 += event.lambda_bar_pT2
     self.pi_plus_pT2 += event.pi_plus_pT2
@@ -271,6 +288,7 @@ class Smash_run:
 
     numpy.save(foldername+'/proton_xF',self.p_hist_xF)
     numpy.save(foldername+'/proton_bar_xF',self.p_bar_hist_xF)
+    numpy.save(foldername+'/neutron_xF',self.n_hist_xF)
     numpy.save(foldername+'/lambda_xF',self.lambda_hist_xF)
     numpy.save(foldername+'/lambda_bar_xF',self.lambda_bar_hist_xF)
     numpy.save(foldername+'/pi_plus_xF', self.pi_plus_hist_xF)
@@ -280,6 +298,7 @@ class Smash_run:
     
     numpy.save(foldername+'/proton_pT',self.p_hist_pT)
     numpy.save(foldername+'/proton_bar_pT',self.p_bar_hist_pT)
+    numpy.save(foldername+'/neutron_pT', self.n_hist_pT)
     numpy.save(foldername+'/lambda_pT',self.lambda_hist_pT)
     numpy.save(foldername+'/lambda_bar_pT',self.lambda_bar_hist_pT)
     numpy.save(foldername+'/pi_plus_pT', self.pi_plus_hist_pT)
@@ -289,6 +308,7 @@ class Smash_run:
 
     numpy.save(foldername+'/proton_pT2',self.p_pT2)
     numpy.save(foldername+'/proton_bar_pT2',self.p_bar_pT2)
+    numpy.save(foldername+'/neutron_pT2',self.n_pT2)
     numpy.save(foldername+'/lambda_pT2',self.lambda_pT2)
     numpy.save(foldername+'/lambda_bar_pT2',self.lambda_bar_pT2)
     numpy.save(foldername+'/pi_plus_pT2',self.pi_plus_pT2)
@@ -298,6 +318,7 @@ class Smash_run:
 
     numpy.save(foldername+'/proton_y',self.p_hist_y)
     numpy.save(foldername+'/proton_bar_y',self.p_bar_hist_y)
+    numpy.saVE(foldername+'/neutron_y',self.n_hist_y)
     numpy.save(foldername+'/lambda_y',self.lambda_hist_y)
     numpy.save(foldername+'/lambda_bar_y',self.lambda_bar_hist_y)
     numpy.save(foldername+'/pi_plus_y', self.pi_plus_hist_y)

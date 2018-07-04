@@ -1,6 +1,7 @@
 import sys
 import numpy
 from math import sqrt
+
 class PlotData:
   def __init__(self,nbins,sqrtsnn,rapidity_range_factor=1.2):
     self.sqrtsnn=sqrtsnn
@@ -12,6 +13,7 @@ class PlotData:
     self.nevents=0
     self.p_hist_xF = numpy.zeros(nbins)
     self.p_bar_hist_xF = numpy.zeros(nbins)
+    self.n_hist_xF = numpy.zeros(nbins)
     self.lambda_hist_xF = numpy.zeros(nbins)
     self.lambda_bar_hist_xF = numpy.zeros(nbins)
     self.pi_plus_hist_xF = numpy.zeros(nbins)
@@ -21,6 +23,7 @@ class PlotData:
 
     self.p_hist_y = numpy.zeros(nbins)
     self.p_bar_hist_y = numpy.zeros(nbins)
+    self.n_hist_y = numpy.zeros(nbins)
     self.lambda_hist_y = numpy.zeros(nbins)
     self.lambda_bar_hist_y = numpy.zeros(nbins)
     self.pi_plus_hist_y = numpy.zeros(nbins)
@@ -32,6 +35,7 @@ class PlotData:
     #it is the summed up pt in every xF bin
     self.p_hist_pT = numpy.zeros(nbins)
     self.p_bar_hist_pT = numpy.zeros(nbins)
+    self.n_hist_pT = numpy.zeros(nbins)
     self.lambda_hist_pT = numpy.zeros(nbins)
     self.lambda_bar_hist_pT = numpy.zeros(nbins)
     self.pi_plus_hist_pT = numpy.zeros(nbins)
@@ -41,6 +45,7 @@ class PlotData:
 
     self.p_pT2 = numpy.zeros(nbins)
     self.p_bar_pT2 = numpy.zeros(nbins)
+    self.n_pT2 = numpy.zeros(nbins)
     self.lambda_pT2 = numpy.zeros(nbins)
     self.lambda_bar_pT2 = numpy.zeros(nbins)
     self.pi_plus_pT2 = numpy.zeros(nbins)
@@ -55,6 +60,7 @@ class PlotData:
   def read_folder(self,foldername):
     self.p_hist_xF += numpy.load(foldername+'proton_xF.npy')
     self.p_bar_hist_xF += numpy.load(foldername+'proton_bar_xF.npy')
+    self.n_hist_xF += numpy.load(foldername+'neutron_hist_xF.npy')
     self.lambda_hist_xF += numpy.load(foldername+'lambda_xF.npy')
     self.lambda_bar_hist_xF += numpy.load(foldername+'lambda_bar_xF.npy')
     self.pi_plus_hist_xF += numpy.load(foldername+'pi_plus_xF.npy')
@@ -64,6 +70,7 @@ class PlotData:
 
     self.p_hist_y += numpy.load(foldername+'proton_y.npy')
     self.p_bar_hist_y += numpy.load(foldername+'proton_bar_y.npy')
+    self.n_hist_y +=numpy.load(foldername+'neutron_y.npy')
     self.lambda_hist_y += numpy.load(foldername+'lambda_y.npy')
     self.lambda_bar_hist_y += numpy.load(foldername+'lambda_bar_y.npy')
     self.pi_plus_hist_y += numpy.load(foldername+'pi_plus_y.npy')
@@ -75,6 +82,7 @@ class PlotData:
     #it is the summed up pt in every xF bin
     self.p_hist_pT += numpy.load(foldername+'proton_pT.npy')
     self.p_bar_hist_pT +=numpy.load(foldername+'proton_bar_pT.npy')
+    self.n_hist_pT += numpy.load(foldername+'neutron_pT.npy')
     self.lambda_hist_pT += numpy.load(foldername+'lambda_pT.npy')
     self.lambda_bar_hist_pT += numpy.load(foldername+'lambda_bar_pT.npy')
     self.pi_plus_hist_pT += numpy.load(foldername+'pi_plus_pT.npy')
@@ -84,6 +92,7 @@ class PlotData:
 
     self.p_pT2 += numpy.load(foldername+'proton_pT2.npy')
     self.p_bar_pT2 +=numpy.load(foldername+'proton_bar_pT2.npy')
+    self.n_pT2 += numpy.load(foldername+'neutron_pT2.npy')
     self.lambda_pT2 += numpy.load(foldername+'lambda_pT2.npy')
     self.lambda_bar_pT2 += numpy.load(foldername+'lambda_bar_pT2.npy')
     self.pi_plus_pT2 += numpy.load(foldername+'pi_plus_pT2.npy')
@@ -125,6 +134,7 @@ class PlotData:
     foldername=fname+'plot_data/'
     self.save_xF(foldername+'p',self.p_hist_xF)
     self.save_xF(foldername+'p_bar',self.p_bar_hist_xF)
+    self.save_xF(foldername+'n',self.p_hist_xF)
     self.save_xF(foldername+'lambda',self.lambda_hist_xF)
     self.save_xF(foldername+'lambda_bar',self.lambda_bar_hist_xF)
     self.save_xF(foldername+'pi_plus',self.pi_plus_hist_xF)
@@ -134,6 +144,7 @@ class PlotData:
 
     self.save_y(foldername+'p',self.p_hist_y)
     self.save_y(foldername+'p_bar',self.p_bar_hist_y)
+    self.save_y(fodlername+'n',self.n_hist_y)
     self.save_y(foldername+'lambda',self.lambda_hist_y)
     self.save_y(foldername+'lambda_bar',self.lambda_bar_hist_y)
     self.save_y(foldername+'pi_plus',self.pi_plus_hist_y)
@@ -144,6 +155,7 @@ class PlotData:
     self.save_pT(foldername+'p',self.p_hist_pT,self.p_pT2,self.p_hist_xF)
     self.save_pT(foldername+'p_bar',self.p_bar_hist_pT,self.p_bar_pT2,\
                                                        self.p_bar_hist_xF)
+    self.save_pT(foldername+'n', self.n_hist_pT, self.n_pT2,self.n_hist_xF)
     self.save_pT(foldername+'lambda',self.lambda_hist_pT,self.lambda_pT2,\
                                                        self.lambda_hist_xF)
     self.save_pT(foldername+'lambda_bar',self.lambda_bar_hist_pT,\
