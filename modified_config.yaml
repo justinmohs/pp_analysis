@@ -22,14 +22,8 @@ Output:
 
 Collision_Term:
     Two_to_One:             True
-    Two_to_Two:             True
     Strings:                True
-    NNbar_Treatment:        no annihilation #Options are "no annihilation",
-                                            #"resonances", "strings"
     Force_Decays_At_End:    True
-    Isotropic:              False
-    Elastic_Cross_Section:  -1.0  # Globally used if non-negative, [mb]
-    Elastic_NN_Cutoff_Sqrts: 1.98 # Exclude the elastic collisions between the two
     Strings_with_Probability: True
 Modi:
     Collider:
@@ -41,8 +35,7 @@ Modi:
             Particles: {2212: 1, 2112: 0}  # Proton
             Automatic: true
             Deformed: false
-        Sqrtsnn: 3.0
         Calculation_Frame: "center of mass"
         Impact:
-            Max: 1.2
+            Value: 0.0
         Fermi_Motion: "off"
