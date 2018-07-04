@@ -43,18 +43,30 @@ label_dict={'p':r'$\mathrm{p}$', 'p_bar':r'$\bar{p}$',\
             'pi_plus': r'$\pi^+$', 'pi_minus':r'$\pi^-$',\
             'K_plus': r'$K^+$', 'K_minus': r'$K^-$'}
 
-for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus']:
+for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n']:
   #load experimental data
-  data=numpy.loadtxt('exp_data/'+beam_momentum+'/'+particle+'_y')
-  exp_y=data[:,0]
-  exp_dndy=data[:,1]
-  exp_err=(data[:,2]+data[:,3])
-  NA49 = numpy.loadtxt('NA49_data/'+beam_momentum+'/'+particle)
-  xF_exp=NA49[:,0]
-  dndxF_exp=NA49[:,1]
-  dndxF_exp_err=NA49[:,2]*dndxF_exp/100#since its in percentage
-  mpT_exp=NA49[:,3]
-  mpT_exp_err=NA49[:,4]*mpT_exp/100#since its in percentage
+  try:
+    data=numpy.loadtxt('exp_data/'+beam_momentum+'/'+particle+'_y')
+    exp_y=data[:,0]
+    exp_dndy=data[:,1]
+    exp_err=(data[:,2]+data[:,3])
+    y_exists=True
+  except IOError:
+    y_exists=False
+  try:
+    NA49 = numpy.loadtxt('NA49_data/'+beam_momentum+'/'+particle)
+    xF_exp=NA49[:,0]
+    dndxF_exp=NA49[:,1]
+    dndxF_exp_err=NA49[:,2]*dndxF_exp/100.0#since its in percentage
+    xF_exists=True
+  except IOError:
+    xF_exists=False
+  try
+    mpT_exp=NA49[:,3]
+    mpT_exp_err=NA49[:,4]*mpT_exp/100.0#since its in percentage
+    mpT_exists=True
+  except IndexError:
+    mpT_exists=False
 
   #create figures
   fig1=plt.figure()
@@ -63,9 +75,11 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus']:
                 r'\,\mathrm{GeV}$',fontsize=25)
   ax1.set_xlabel('$y$',fontsize=30)
   ax1.set_ylabel(r'$dN/dy$',fontsize=30)
-  label_y=r'$\mathrm{NA61} \, p_{lab}='+plab+r'\,\mathrm{GeV}$'
-  ax1.errorbar(exp_y, exp_dndy, yerr=exp_err, fmt='o', mfc='m',ecolor='m',markersize=8,label=label_y)
-  ax1.set_ylim(0,max(exp_dndy)*1.2)
+  if y_exists:
+    label_y=r'$\mathrm{NA61} \, p_{lab}='+plab+r'\,\mathrm{GeV}$'
+    ax1.errorbar(exp_y, exp_dndy, yerr=exp_err, fmt='o', mfc='m',\
+                 ecolor='m',markersize=8,label=label_y)
+    ax1.set_ylim(0,max(exp_dndy)*1.2)
 
   fig2=plt.figure()
   ax2=fig2.add_subplot('111')
@@ -73,8 +87,9 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus']:
                 r'\,\mathrm{GeV}$',fontsize=25)
   ax2.set_xlabel(r'$x_F$',fontsize=30)
   ax2.set_ylabel(r'$dN/dx_F$',fontsize=30)
-  ax2.errorbar(xF_exp,dndxF_exp,yerr=dndxF_exp_err,marker='o',linestyle='none',lw=2,\
-             label=r'$\mathrm{NA49\, data}$')
+  if xF_exists:
+    ax2.errorbar(xF_exp,dndxF_exp,yerr=dndxF_exp_err,marker='o',\
+                 linestyle='none',lw=2, label=r'$\mathrm{NA49\, data}$')
 
   fig3=plt.figure()
   ax3=fig3.add_subplot('111')
@@ -82,8 +97,9 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus']:
                 r'\,\mathrm{GeV}$', fontsize=25)
   ax3.set_xlabel(r'$x_F$',fontsize=30)
   ax3.set_ylabel(r'$\langle p_T \rangle \,\mathrm{\left[GeV\right]}$',fontsize=30)
-  ax3.errorbar(xF_exp,mpT_exp,yerr=mpT_exp_err,marker='o',linestyle='none',lw=2,\
-             label=r'$\mathrm{NA49\, data}$')
+  if mpT_exists:
+    ax3.errorbar(xF_exp,mpT_exp,yerr=mpT_exp_err,marker='o',linestyle='none',lw=2,\
+                 label=r'$\mathrm{NA49\, data}$')
 
   for val in values:
     foldername="data_"+str(sqrtsnn)+"_"+par+"_"+val+'/plot_data/'
