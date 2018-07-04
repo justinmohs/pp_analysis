@@ -1,0 +1,48 @@
+ogging:
+  default: INFO
+General:
+    Modus:         Collider
+    Time_Step_Mode: Fixed
+    Delta_Time:    0.1
+    End_Time:      50.0
+    Randomseed:    -1
+    Testparticles: 1
+    Nevents:       20000
+    Gaussian_Sigma: 1.0
+    Gauss_Cutoff_In_Sigma: 3.0
+    Use_Grid: True
+
+Output:
+    Output_Interval:  1.0
+    Density_Type:      "none"
+    Particles:
+            Format:          ["Oscar2013"]
+            Extended:        False
+            Only_Final:      True
+
+Collision_Term:
+    Two_to_One:             True
+    Two_to_Two:             True
+    Strings:                True
+    NNbar_Treatment:        no annihilation #Options are "no annihilation",
+                                            #"resonances", "strings"
+    Force_Decays_At_End:    True
+    Isotropic:              False
+    Elastic_Cross_Section:  -1.0  # Globally used if non-negative, [mb]
+    Elastic_NN_Cutoff_Sqrts: 1.98 # Exclude the elastic collisions between the two
+    Strings_with_Probability: True
+Modi:
+    Collider:
+        Projectile:
+            Particles: {2212: 1, 2112: 0}  # Proton
+            Automatic: true
+            Deformed: false
+        Target:
+            Particles: {2212: 1, 2112: 0}  # Proton
+            Automatic: true
+            Deformed: false
+        Sqrtsnn: 3.0
+        Calculation_Frame: "center of mass"
+        Impact:
+            Max: 1.2
+        Fermi_Motion: "off"
