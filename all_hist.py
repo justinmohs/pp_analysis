@@ -110,9 +110,10 @@ class Eventdata:
     xF=particle.xF(self.pz_beam)
     y=particle.y()
     if xF >= 1:
-      xF_hist[self.nbins-1]+=1
-      pT_hist[self.nbins-1]+=pT
-      pT2[self.nbins-1]+=pT*pT
+      print [xF,particle.pdg]
+      #xF_hist[self.nbins-1]+=1
+      #pT_hist[self.nbins-1]+=pT
+      #pT2[self.nbins-1]+=pT*pT
     else: 
       xF_hist[xF/self.xF_binwidth]+=1
       pT_hist[xF/self.xF_binwidth]+= pT
@@ -318,7 +319,7 @@ class Smash_run:
 
     numpy.save(foldername+'/proton_y',self.p_hist_y)
     numpy.save(foldername+'/proton_bar_y',self.p_bar_hist_y)
-    numpy.saVE(foldername+'/neutron_y',self.n_hist_y)
+    numpy.save(foldername+'/neutron_y',self.n_hist_y)
     numpy.save(foldername+'/lambda_y',self.lambda_hist_y)
     numpy.save(foldername+'/lambda_bar_y',self.lambda_bar_hist_y)
     numpy.save(foldername+'/pi_plus_y', self.pi_plus_hist_y)

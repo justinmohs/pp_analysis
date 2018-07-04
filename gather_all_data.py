@@ -60,7 +60,7 @@ class PlotData:
   def read_folder(self,foldername):
     self.p_hist_xF += numpy.load(foldername+'proton_xF.npy')
     self.p_bar_hist_xF += numpy.load(foldername+'proton_bar_xF.npy')
-    self.n_hist_xF += numpy.load(foldername+'neutron_hist_xF.npy')
+    self.n_hist_xF += numpy.load(foldername+'neutron_xF.npy')
     self.lambda_hist_xF += numpy.load(foldername+'lambda_xF.npy')
     self.lambda_bar_hist_xF += numpy.load(foldername+'lambda_bar_xF.npy')
     self.pi_plus_hist_xF += numpy.load(foldername+'pi_plus_xF.npy')
@@ -144,7 +144,7 @@ class PlotData:
 
     self.save_y(foldername+'p',self.p_hist_y)
     self.save_y(foldername+'p_bar',self.p_bar_hist_y)
-    self.save_y(fodlername+'n',self.n_hist_y)
+    self.save_y(foldername+'n',self.n_hist_y)
     self.save_y(foldername+'lambda',self.lambda_hist_y)
     self.save_y(foldername+'lambda_bar',self.lambda_bar_hist_y)
     self.save_y(foldername+'pi_plus',self.pi_plus_hist_y)

@@ -39,6 +39,7 @@ unit = {'String_Tension': r'\,\mathrm{GeV/fm}',\
         'String_Sigma_T': r'\,\mathrm{GeV}'}
 
 label_dict={'p':r'$\mathrm{p}$', 'p_bar':r'$\bar{p}$',\
+            'n':r'$\mathrm{n}$',\
             'lambda': r'$\Lambda$', 'lambda_bar': r'$\bar{\Lambda}$',\
             'pi_plus': r'$\pi^+$', 'pi_minus':r'$\pi^-$',\
             'K_plus': r'$K^+$', 'K_minus': r'$K^-$'}
@@ -61,7 +62,7 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n']:
     xF_exists=True
   except IOError:
     xF_exists=False
-  try
+  try:
     mpT_exp=NA49[:,3]
     mpT_exp_err=NA49[:,4]*mpT_exp/100.0#since its in percentage
     mpT_exists=True
