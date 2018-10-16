@@ -20,12 +20,15 @@ par_dict = {'String_Tension': r'\kappa', 'Gluon_Beta': r'\beta_\mathrm{gluon}',\
             'Gluon_Pmin': r'p_\mathrm{min,gluon}',\
             'Quark_Alpha': r'\alpha_\mathrm{quark}',\
             'Quark_Beta': r'\beta_\mathrm{quark}',\
-            'Strange_Supp': r's\bar{s}\, \mathrm{supp}',\
-            'Diquark_Supp': r'\mathrm{Diquark\,supp}',\
+            'Strange_Supp': r'\lambda_s',\
+            'Diquark_Supp': r'\lambda_\mathrm{diquark}',\
             'Sigma_Perp': r'\sigma_T',\
             'StringZ_A': r'a_\mathrm{string}',\
             'StringZ_B': r'b_\mathrm{string}',\
-            'String_Sigma_T': r'\sigma_{T,\mathrm{string}}'}
+            'String_Sigma_T': r'\sigma_{T,\mathrm{string}}',\
+            'Prob_proton_to_d_uu': r'\xi',\
+            'Leading_Frag_Mean': r'\mu_\mathrm{leading}',\
+            'Leading_Frag_Width': r'\sigma_\mathrm{leading}'}
 unit = {'String_Tension': r'\,\mathrm{GeV/fm}',\
         'Gluon_Beta': '',\
         'Gluon_Pmin': '\,\mathrm{GeV}',\
@@ -36,7 +39,10 @@ unit = {'String_Tension': r'\,\mathrm{GeV/fm}',\
         'Sigma_Perp': r'\,\mathrm{GeV}',\
         'StringZ_A': '',\
         'StringZ_B': r'\,\mathrm{GeV^{-2}}',\
-        'String_Sigma_T': r'\,\mathrm{GeV}'}
+        'String_Sigma_T': r'\,\mathrm{GeV}',\
+        'Prob_proton_to_d_uu': '',\
+        'Leading_Frag_Mean': '',\
+        'Leading_Frag_Width': ''}
 
 label_dict={'p':r'$\mathrm{p}$', 'p_bar':r'$\bar{p}$',\
             'n':r'$\mathrm{n}$',\
@@ -44,7 +50,7 @@ label_dict={'p':r'$\mathrm{p}$', 'p_bar':r'$\bar{p}$',\
             'pi_plus': r'$\pi^+$', 'pi_minus':r'$\pi^-$',\
             'K_plus': r'$K^+$', 'K_minus': r'$K^-$'}
 
-for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n']:
+for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambda']:
   #load experimental data
   try:
     data=numpy.loadtxt('exp_data/'+beam_momentum+'/'+particle+'_y')
@@ -112,24 +118,29 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n']:
     binwidth=1.0/nbins
     xF_binmids=(numpy.linspace(0,1,nbins+1) + (0.5*binwidth*numpy.ones(nbins+1)))[:-1]
     ax2.errorbar(xF_binmids,xF_hist,yerr=xF_err,lw=2,\
-                 label=r'$\mathrm{SMASH}\,'+par_dict[par]+'='+val+unit[par]+'$')
-    ax2.set_ylim(0,1.2*max(xF_hist[:-1]))
+                 label=r'$'+par_dict[par]+'='+val+unit[par]+'$')
+    if particle=='p':
+      ax2.set_ylim(0,1.2*max(xF_hist[:-1]))
     
     mean_pT = numpy.load(foldername+particle+'_pT.npy')
     mean_pT_err = numpy.load(foldername+particle+'_pT_err.npy')
     ax3.plot(xF_binmids,mean_pT,lw=2,\
-                 label=r'$\mathrm{SMASH}\,'+par_dict[par]+'='+val+unit[par]+'$')
+                 label=r'$'+par_dict[par]+'='+val+unit[par]+'$')
 
     y_hist = numpy.load(foldername+particle+'_y.npy')
     y_err = numpy.load(foldername+particle+'_y_err.npy')
     y_binwidth = 2*ymax/nbins
     y_binmids = (numpy.linspace(-ymax,ymax,nbins+1) + (0.5*y_binwidth*numpy.ones(nbins+1)))[:-1]
     ax1.errorbar(y_binmids,y_hist,yerr=y_err,lw=2,\
-                 label=r'$\mathrm{SMASH}\,'+par_dict[par]+'='+val+unit[par]+'$')
+                 label=r'$'+par_dict[par]+'='+val+unit[par]+'$')
   ax1.set_xlim([0,ymax])
   legend1=ax1.legend(loc='best')
   legend3=ax3.legend(loc='best')
-  legend2=ax2.legend(loc='best')
+  if particle=='p':
+    legend=ax2.legend(loc='upper right')
+  else:
+    legend2=ax2.legend(loc='best')
+
   if not os.path.exists(par+'_'+str(sqrtsnn)+'/y/'):
     os.makedirs(par+'_'+str(sqrtsnn)+'/y/')
   if not os.path.exists(par+'_'+str(sqrtsnn)+'/xF/'):

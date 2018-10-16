@@ -22,9 +22,11 @@
 #SBATCH --time=0-9:59:59
 
 sqrtsnn=$1
+foldername=$2
+nfolders=$3
 run_smash() {
     i=$1    # get index
-    python all_hist.py "data_$sqrtsnn/$i" $sqrtsnn
+    python all_hist.py "$foldername$i" $sqrtsnn
 }
 
 ncpu=`grep -c '^processor' /proc/cpuinfo`
@@ -36,5 +38,5 @@ done
 wait
 rm -rf "data_$sqrtsnn/plot_data"
 mkdir "data_$sqrtsnn/plot_data"
-python gather_all_data.py $sqrtsnn $ncpu "data_$sqrtsnn/"
+python gather_all_data.py $sqrtsnn $nfolders $foldername
 

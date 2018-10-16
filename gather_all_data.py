@@ -126,7 +126,7 @@ class PlotData:
   def save_pT(self,filename,pT_hist,pT2,xF_hist):
     mean_pT = pT_hist/xF_hist
     mean_pT2 = pT2/xF_hist
-    mean_pT_err = numpy.sqrt(mean_pT2-mean_pT**2)/(xF_hist-1)
+    mean_pT_err = numpy.sqrt((mean_pT2-mean_pT**2)/(xF_hist-1))
     numpy.save(filename+'_pT.npy',mean_pT)
     numpy.save(filename+'_pT_err.npy',mean_pT_err)
 
@@ -134,7 +134,7 @@ class PlotData:
     foldername=fname+'plot_data/'
     self.save_xF(foldername+'p',self.p_hist_xF)
     self.save_xF(foldername+'p_bar',self.p_bar_hist_xF)
-    self.save_xF(foldername+'n',self.p_hist_xF)
+    self.save_xF(foldername+'n',self.n_hist_xF)
     self.save_xF(foldername+'lambda',self.lambda_hist_xF)
     self.save_xF(foldername+'lambda_bar',self.lambda_bar_hist_xF)
     self.save_xF(foldername+'pi_plus',self.pi_plus_hist_xF)

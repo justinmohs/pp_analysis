@@ -331,7 +331,7 @@ nbins=20
 full_smash_run=Smash_run(nbins)
 sqrtsnn = float(sys.argv[2])
 pzmax = sqrt(sqrtsnn*sqrtsnn/4.0 -0.938*0.938)
-particles_of_interest= ['2212', '-2212','3212','-3212','211','-211','321','-321']
+particles_of_interest= ['2212', '-2212','3212','-3212','211','-211','321','-321', '2112']
 try:
   datafile=open(sys.argv[1]+'/particle_lists.oscar')
 except IOError:

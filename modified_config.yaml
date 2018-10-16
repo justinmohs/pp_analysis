@@ -1,5 +1,3 @@
-ogging:
-  default: INFO
 General:
     Modus:         Collider
     Time_Step_Mode: Fixed
@@ -25,6 +23,14 @@ Collision_Term:
     Strings:                True
     Force_Decays_At_End:    True
     Strings_with_Probability: True
+    String_Parameters:
+        Leading_Frag_Mean: 1.0
+        Leading_Frag_Width: 0.6
+        StringZ_B: 0.3
+        Strange_Supp: 0.12
+        Diquark_Supp: 0.03
+        String_Sigma_T: 0.38
+        Sigma_Perp: 0.6
 Modi:
     Collider:
         Projectile:

@@ -19,7 +19,7 @@
 #SBATCH --mem-per-cpu=1000
 #
 # default time 10min, max 8 days?:
-#SBATCH --time=0-01:19:59
+#SBATCH --time=0-00:19:59
 
 smash_build_folder=$1
 sqrtsnn=$2
