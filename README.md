@@ -1,3 +1,5 @@
-# This is for analysing p+p results from SMASH.
+# pp Analysis 
 
-just run the shell script
+This is for analysing p+p results from SMASH.
+
+Just run the shell scripts.
