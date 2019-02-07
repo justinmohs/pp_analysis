@@ -110,14 +110,14 @@ class Eventdata:
     xF=particle.xF(self.pz_beam)
     y=particle.y()
     if xF >= 1:
-      print [xF,particle.pdg]
+      print([xF,particle.pdg])
       #xF_hist[self.nbins-1]+=1
       #pT_hist[self.nbins-1]+=pT
       #pT2[self.nbins-1]+=pT*pT
     else: 
-      xF_hist[xF/self.xF_binwidth]+=1
-      pT_hist[xF/self.xF_binwidth]+= pT
-      pT2[xF/self.xF_binwidth]+=pT*pT
+      xF_hist[int(xF/self.xF_binwidth)]+=1
+      pT_hist[int(xF/self.xF_binwidth)]+= pT
+      pT2[int(xF/self.xF_binwidth)]+=pT*pT
     if abs(y) < self.ymax:
       y_hist[int((y+self.ymax)/self.y_binwidth)]+=1
     
@@ -279,13 +279,13 @@ class Smash_run:
 
   def save_results(self,foldername):
     output=open(sys.argv[1]+'/nevents.txt','w')
-    print >> output, self.nevents
+    print(self.nevents,file=output)
     mT_output=open(sys.argv[1]+'/p_mT','w')
     mT2_output=open(sys.argv[1]+'/p_mT2','w')
-    print >> mT_output, self.p_hist_mT
-    print >> mT2_output, self.p_mT2
+    print(self.p_hist_mT, file=mT_output)
+    print(self.p_mT2, file = mT2_output)
     np_midrap_file=open(sys.argv[1]+'/n_protons_midrap','w')
-    print >> np_midrap_file, self.np_midrap
+    print(self.np_midrap, file = np_midrap_file)
 
     numpy.save(foldername+'/proton_xF',self.p_hist_xF)
     numpy.save(foldername+'/proton_bar_xF',self.p_bar_hist_xF)
@@ -336,7 +336,7 @@ try:
   datafile=open(sys.argv[1]+'/particle_lists.oscar')
 except IOError:
   datafile=open(sys.argv[1]+'/particle_lists.oscar.unfinished')
-  print 'WARNING: USING UNFINISHED SMASH OUTPUT'
+  print('WARNING: USING UNFINISHED SMASH OUTPUT')
 current_event = Eventdata(nbins,pzmax)
 for line in datafile:
   if line[0] == '#': #end of event

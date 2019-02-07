@@ -126,7 +126,7 @@ class PlotData:
   def save_pT(self,filename,pT_hist,pT2,xF_hist):
     mean_pT = pT_hist/xF_hist
     mean_pT2 = pT2/xF_hist
-    mean_pT_err = numpy.sqrt((mean_pT2-mean_pT**2)/(xF_hist-1))
+    mean_pT_err = numpy.sqrt((mean_pT2-mean_pT**2)/(xF_hist-1.0))
     numpy.save(filename+'_pT.npy',mean_pT)
     numpy.save(filename+'_pT_err.npy',mean_pT_err)
 
@@ -174,9 +174,9 @@ class PlotData:
     mean_mT2 = self.p_mT2/self.n_p_midrap
     mT_err = (mean_mT2-mean_mT*mean_mT)/(self.n_p_midrap-1)
     output=open(foldername+'p_mean_mT','w')
-    print >> output , mean_mT
+    print(mean_mT, file = output)
     output2=open(foldername+'p_mean_mT_err','w')
-    print >> output2, mT_err
+    print(mT_err, file = output2)
 nbins=20
 sqrtsnn = sys.argv[1]
 nfolders = int(sys.argv[2])

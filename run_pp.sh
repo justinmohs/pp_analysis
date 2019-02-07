@@ -1,10 +1,6 @@
 #!/bin/bash
 #
-#SBATCH --ntasks=20
 #SBATCH --nodes=1
-#
-# constrain depending on how this was compiled
-#SBATCH --constraint=intel20
 #
 # no hyperthreading necessary
 #SBATCH --extra-node-info=2:10:1
@@ -13,7 +9,7 @@
 #SBATCH --job-name=smash
 #
 # (only parallel allowed?)
-#SBATCH --partition=parallel
+#SBATCH --partition=test
 #
 # mem allocation (only 200m default)
 #SBATCH --mem-per-cpu=1000
@@ -24,10 +20,16 @@
 smash_build_folder=$1
 sqrtsnn=$2
 config=$3
+
+#setup python and numpy
+spack load python@3.7.0
+spack load py-pip
+python -m pip install --user numpy
 rm -rf "data_$sqrtsnn"
 mkdir "data_$sqrtsnn"
 start_dir=$PWD
 cd $smash_build_folder
+
 run_smash() {
     i=$1    # get index
     mkdir "$start_dir/data_$sqrtsnn/$i"

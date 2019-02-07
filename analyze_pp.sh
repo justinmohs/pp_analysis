@@ -1,10 +1,6 @@
 #!/bin/bash
 #
-#SBATCH --ntasks=20
 #SBATCH --nodes=1
-#
-# constrain depending on how this was compiled
-#SBATCH --constraint=intel20
 #
 # no hyperthreading necessary
 #SBATCH --extra-node-info=2:10:1
@@ -13,13 +9,13 @@
 #SBATCH --job-name=smash
 #
 # (only parallel allowed?)
-#SBATCH --partition=parallel
+#SBATCH --partition=test
 #
 # mem allocation (only 200m default)
 #SBATCH --mem-per-cpu=1000
 #
 # default time 10min, max 8 days?:
-#SBATCH --time=0-9:59:59
+#SBATCH --time=0-0:03:59
 
 sqrtsnn=$1
 foldername=$2
