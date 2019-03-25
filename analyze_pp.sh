@@ -17,6 +17,9 @@
 # default time 10min, max 8 days?:
 #SBATCH --time=0-0:03:59
 
+export OMP_NUM_THREADS=1
+export USE_SIMPLE_THREADED_LEVEL3=1
+
 sqrtsnn=$1
 foldername=$2
 nfolders=$3
