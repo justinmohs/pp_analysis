@@ -1,19 +1,10 @@
 #!/bin/bash
 #
-#SBATCH --ntasks=20
-#SBATCH --nodes=1
-#
-# constrain depending on how this was compiled
-#SBATCH --constraint=intel20
-#
-# no hyperthreading necessary
-#SBATCH --extra-node-info=2:10:1
-#
 # job name:
-#SBATCH --job-name=smash
+#SBATCH --job-name=smash_pp
 #
 # (only parallel allowed?)
-#SBATCH --partition=parallel
+#SBATCH --partition=general1
 #
 # mem allocation (only 200m default)
 #SBATCH --mem-per-cpu=1000
@@ -26,6 +17,8 @@ sqrtsnn=$2
 var=$3
 value=$4
 config=$5
+
+export OMP_NUM_THREADS=1
 rm -rf "data_"$sqrtsnn"_"$var"_"$value
 mkdir "data_"$sqrtsnn"_"$var"_"$value
 start_dir=$PWD

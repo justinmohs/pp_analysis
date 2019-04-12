@@ -1,6 +1,6 @@
 import matplotlib
 matplotlib.use('Agg')
-matplotlib.rcParams['mathtext.fontset'] = 'stix'
+matplotlib.rcParams['mathtext.fontset'] = 'cm'
 from matplotlib import pyplot as plt
 import numpy
 import sys
@@ -28,7 +28,10 @@ par_dict = {'String_Tension': r'\kappa', 'Gluon_Beta': r'\beta_\mathrm{gluon}',\
             'String_Sigma_T': r'\sigma_{T,\mathrm{string}}',\
             'Prob_proton_to_d_uu': r'\xi',\
             'Leading_Frag_Mean': r'\mu_\mathrm{leading}',\
-            'Leading_Frag_Width': r'\sigma_\mathrm{leading}'}
+            'Leading_Frag_Width': r'\sigma_\mathrm{leading}',\
+            'StringZ_A_Leading': r'a_\mathrm{leading}',\
+            'StringZ_B_Leading': r'b_\mathrm{leading}',\
+            'Popcorn_Rate': r'\mathrm{Popcorn\,Rate}'}
 unit = {'String_Tension': r'\,\mathrm{GeV/fm}',\
         'Gluon_Beta': '',\
         'Gluon_Pmin': '\,\mathrm{GeV}',\
@@ -42,7 +45,10 @@ unit = {'String_Tension': r'\,\mathrm{GeV/fm}',\
         'String_Sigma_T': r'\,\mathrm{GeV}',\
         'Prob_proton_to_d_uu': '',\
         'Leading_Frag_Mean': '',\
-        'Leading_Frag_Width': ''}
+        'Leading_Frag_Width': '',\
+        'StringZ_A_Leading': '',\
+        'StringZ_B_Leading': '\,\mathrm{GeV^{-2}}',
+        'Popcorn_Rate': ''}
 
 label_dict={'p':r'$\mathrm{p}$', 'p_bar':r'$\bar{p}$',\
             'n':r'$\mathrm{n}$',\
@@ -78,19 +84,19 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
   #create figures
   fig1=plt.figure()
   ax1=fig1.add_subplot('111')
-  ax1.set_title(label_dict[particle]+r' $\sqrt{s_{NN}}='+str(sqrtsnn)+\
+  ax1.set_title(label_dict[particle]+r' $\sqrt{s}='+str(sqrtsnn)+\
                 r'\,\mathrm{GeV}$',fontsize=25)
   ax1.set_xlabel('$y$',fontsize=30)
   ax1.set_ylabel(r'$dN/dy$',fontsize=30)
   if y_exists:
     label_y=r'$\mathrm{NA61} \, p_{lab}='+plab+r'\,\mathrm{GeV}$'
-    ax1.errorbar(exp_y, exp_dndy, yerr=exp_err, fmt='o', mfc='m',\
-                 ecolor='m',markersize=8,label=label_y)
+    ax1.errorbar(exp_y, exp_dndy, yerr=exp_err, fmt='o',\
+                 markersize=8,label=label_y)
     ax1.set_ylim(0,max(exp_dndy)*1.2)
 
   fig2=plt.figure()
   ax2=fig2.add_subplot('111')
-  ax2.set_title(label_dict[particle]+r' $\sqrt{s_{NN}}='+str(sqrtsnn)+\
+  ax2.set_title(label_dict[particle]+r' $\sqrt{s}='+str(sqrtsnn)+\
                 r'\,\mathrm{GeV}$',fontsize=25)
   ax2.set_xlabel(r'$x_F$',fontsize=30)
   ax2.set_ylabel(r'$dN/dx_F$',fontsize=30)
@@ -100,7 +106,7 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
 
   fig3=plt.figure()
   ax3=fig3.add_subplot('111')
-  ax3.set_title(label_dict[particle]+r' $\sqrt{s_{NN}}='+str(sqrtsnn)+\
+  ax3.set_title(label_dict[particle]+r' $\sqrt{s}='+str(sqrtsnn)+\
                 r'\,\mathrm{GeV}$', fontsize=25)
   ax3.set_xlabel(r'$x_F$',fontsize=30)
   ax3.set_ylabel(r'$\langle p_T \rangle \,\mathrm{\left[GeV\right]}$',fontsize=30)
@@ -117,11 +123,12 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
     nbins=len(xF_hist)
     binwidth=1.0/nbins
     xF_binmids=(numpy.linspace(0,1,nbins+1) + (0.5*binwidth*numpy.ones(nbins+1)))[:-1]
-    ax2.errorbar(xF_binmids,xF_hist,yerr=xF_err,lw=2,\
+    ax2.errorbar(xF_binmids[:-1],xF_hist[:-1],yerr=xF_err[:-1],lw=2,\
                  label=r'$'+par_dict[par]+'='+val+unit[par]+'$')
     if particle=='p':
       ax2.set_ylim(0,1.2*max(xF_hist[:-1]))
-    
+    else:
+      ax2.set_yscale('log')
     mean_pT = numpy.load(foldername+particle+'_pT.npy')
     mean_pT_err = numpy.load(foldername+particle+'_pT_err.npy')
     ax3.plot(xF_binmids,mean_pT,lw=2,\
@@ -147,9 +154,11 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
     os.makedirs(par+'_'+str(sqrtsnn)+'/xF/')
   if not os.path.exists(par+'_'+str(sqrtsnn)+'/mpt/'):
     os.makedirs(par+'_'+str(sqrtsnn)+'/mpt/')
-
+  fig1.tight_layout()
   fig1.savefig(par+'_'+str(sqrtsnn)+'/y/'+particle+'.pdf')
+  fig2.tight_layout()
   fig2.savefig(par+'_'+str(sqrtsnn)+'/xF/'+particle+'.pdf')
+  fig3.tight_layout()
   fig3.savefig(par+'_'+str(sqrtsnn)+'/mpt/'+particle+'.pdf')
 
 
