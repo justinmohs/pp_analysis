@@ -327,7 +327,7 @@ class Smash_run:
     numpy.save(foldername+'/K_plus_y',self.K_plus_hist_y)
     numpy.save(foldername+'/K_minus_y',self.K_minus_hist_y)
     
-nbins=20
+nbins=100
 full_smash_run=Smash_run(nbins)
 sqrtsnn = float(sys.argv[2])
 pzmax = sqrt(sqrtsnn*sqrtsnn/4.0 -0.938*0.938)

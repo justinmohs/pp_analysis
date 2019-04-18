@@ -177,7 +177,7 @@ class PlotData:
     print(mean_mT, file = output)
     output2=open(foldername+'p_mean_mT_err','w')
     print(mT_err, file = output2)
-nbins=20
+nbins=100
 sqrtsnn = sys.argv[1]
 nfolders = int(sys.argv[2])
 all_data=PlotData(nbins,sqrtsnn)
