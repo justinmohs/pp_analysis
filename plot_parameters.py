@@ -84,7 +84,7 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
   #create figures
   fig1=plt.figure()
   ax1=fig1.add_subplot('111')
-  ax1.set_title(label_dict[particle]+r' $\sqrt{s}='+str(sqrtsnn)+\
+  ax1.set_title(label_dict[particle]+r'$,\ \sqrt{s}='+str(sqrtsnn)+\
                 r'\,\mathrm{GeV}$',fontsize=25)
   ax1.set_xlabel('$y$',fontsize=30)
   ax1.set_ylabel(r'$dN/dy$',fontsize=30)
@@ -96,7 +96,7 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
 
   fig2=plt.figure()
   ax2=fig2.add_subplot('111')
-  ax2.set_title(label_dict[particle]+r' $\sqrt{s}='+str(sqrtsnn)+\
+  ax2.set_title(label_dict[particle]+r'$,\ \sqrt{s}='+str(sqrtsnn)+\
                 r'\,\mathrm{GeV}$',fontsize=25)
   ax2.set_xlabel(r'$x_F$',fontsize=30)
   ax2.set_ylabel(r'$dN/dx_F$',fontsize=30)
@@ -106,7 +106,7 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
 
   fig3=plt.figure()
   ax3=fig3.add_subplot('111')
-  ax3.set_title(label_dict[particle]+r' $\sqrt{s}='+str(sqrtsnn)+\
+  ax3.set_title(label_dict[particle]+r'$,\ \sqrt{s}='+str(sqrtsnn)+\
                 r'\,\mathrm{GeV}$', fontsize=25)
   ax3.set_xlabel(r'$x_F$',fontsize=30)
   ax3.set_ylabel(r'$\langle p_T \rangle \,\mathrm{\left[GeV\right]}$',fontsize=30)
