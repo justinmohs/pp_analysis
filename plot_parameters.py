@@ -6,10 +6,11 @@ import numpy
 import sys
 import os
 from math import sqrt
-par = sys.argv[1]
-values=sys.argv[2:]
+sqrtsnn = float(sys.argv[1])#GeV
+par = sys.argv[2]
+values=sys.argv[3:]
 
-sqrtsnn=17.27#GeV
+
 pz_beam = sqrt(sqrtsnn*sqrtsnn/4.0 -0.938*0.938)
 E_beam = sqrt(pz_beam*pz_beam + 0.938*0.938)
 y_beam = 0.5 * numpy.log((E_beam + pz_beam)/(E_beam - pz_beam))
