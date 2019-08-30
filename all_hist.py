@@ -342,8 +342,9 @@ for line in datafile:
   if line[0] == '#': #end of event
     if current_event.is_nontrivial():
       full_smash_run.add_event(current_event)
-      current_event = Eventdata(nbins,pzmax) #override event with empty event
+    current_event = Eventdata(nbins,pzmax) #override event with empty event
     continue
+  
   
   dataline=line.split(' ')
   pdg=dataline[9]
