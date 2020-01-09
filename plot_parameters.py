@@ -1,8 +1,13 @@
+from cycler import cycler
 import matplotlib
 matplotlib.use('Agg')
 matplotlib.rcParams['mathtext.fontset'] = 'cm'
 matplotlib.rcParams['figure.max_open_warning'] = 30
 from matplotlib import pyplot as plt
+colors=plt.rcParams['axes.prop_cycle'].by_key()['color']
+custom_cycler = (cycler(color = colors) +
+                 cycler(linestyle = [(0,(5,1)), '-','--', ':', '-.', \
+                                     (0,(5,1)), '-','--', ':', '-.']))
 import numpy
 import sys
 import os
@@ -96,6 +101,7 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
   #create figures
   fig1=plt.figure()
   ax1=fig1.add_subplot('111')
+  ax1.set_prop_cycle(custom_cycler)
   loc.set_observable('y')
   ax1.text(loc.get_xpos(), loc.get_ypos(), label_dict[particle]+'\n'+\
            '$\sqrt{s}='+str(sqrtsnn)+ '\,\mathrm{GeV}$'+'\n'+ \
@@ -110,6 +116,7 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
 
   fig2=plt.figure()
   ax2=fig2.add_subplot('111')
+  ax2.set_prop_cycle(custom_cycler)
   #ax2.set_title(label_dict[particle]+r'$,\ \sqrt{s}='+str(sqrtsnn)+\
   #              r'\,\mathrm{GeV}$',fontsize=25)
   loc.set_observable('xF')
@@ -125,6 +132,7 @@ for particle in ['p','p_bar','pi_plus','pi_minus','K_plus', 'K_minus','n','lambd
 
   fig3=plt.figure()
   ax3=fig3.add_subplot('111')
+  ax3.set_prop_cycle(custom_cycler)
   #ax3.set_title(label_dict[particle]+r'$,\ \sqrt{s}='+str(sqrtsnn)+\
   #              r'\,\mathrm{GeV}$', fontsize=25)
   loc.set_observable('mpt')
